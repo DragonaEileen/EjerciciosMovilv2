@@ -1,6 +1,7 @@
 package com.ejercicios.ejercicio1_3
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat
 class MainActivity : AppCompatActivity(){
     companion object {
         lateinit var username: EditText
+        lateinit var password: EditText
         var contentView: Int = 0
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +32,17 @@ class MainActivity : AppCompatActivity(){
     private fun login() {
         //Username
         username = findViewById<EditText>(R.id.usernameEdit)
+        //Password
+        password = findViewById<EditText>(R.id.editTextTextPassword3)
         //Button
         findViewById<Button>(R.id.enterButton)
             .setOnClickListener {
-                changeContentView(R.layout.welcome_view)
-                findViewById<TextView>(R.id.welcomeText).append(username.text)
+                if((username.text.toString() == "LaDaniWapa") && password.text.toString() == "LinuxMapache"){
+                    val myIntention = Intent(this, HomeActivity::class.java)
+                    myIntention.putExtra("username", username.text.toString())
+                    startActivity(myIntention)
+                    finish()
+                }
             }
     }
 
@@ -69,8 +77,6 @@ class MainActivity : AppCompatActivity(){
         val duration = Toast.LENGTH_SHORT
         val toast = Toast.makeText(this, text, duration)
         toast.show()
-        changeContentView(R.layout.activity_main)
-        login()
         Log.d(":::Vida", "Acabo de parar la aplicacion")
         }
 
